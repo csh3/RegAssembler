@@ -30,6 +30,7 @@ The current version requires:
 The latter three tools can be installed using Bioconda (https://bioconda.github.io/). 
 
 **Please ensure the above in your environment variable `PATH`.**
+
 ## 4. Commands
 The main program is `Re-sampling.py`, and we recommand the following parameters.
 
@@ -39,7 +40,7 @@ For **Miseq** datasets:
 python Re-sampling.py -thr 10 -ho 5 -al 30 -t THREADS -s SAMPLES
 ```
 
-For datasets sequenced from other illumina platforms (such as **NextSeq 550** and **NovaSeq 6000**:
+For datasets sequenced from other illumina platforms (such as **NextSeq 550** and **NovaSeq 6000**):
 
 ```
 python Re-sampling.py -thr 3 -ho 2 -al 20 -t THREADS -s SAMPLES
@@ -53,26 +54,19 @@ python Re-sampling.py -nchi -thr 3 -ho 2 -al 30 -t THREADS -s SAMPLES
 
 `-t THREADS` specifies the number of threads you would like to use. 
 
-`-s SAMPLES` specifies the number of samplings in the re-sampling scheme. The defaut setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
+`-s SAMPLES` specifies the number of samplings in the re-sampling scheme. The default setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
 
-## 5. Output
-
-## 6. Example
-
-## 7. Parameters
-
-
-## 8. Current version
+## 5. Current version
 
 The version of the current release is v1.0.
 
 
-## 9. Contact
+## 6. Contact
 
 Please contact `cao.shenghao@foxmail.com` for any questions.
 
 
-## 10. License
+## 7. License
 
 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License**
 
