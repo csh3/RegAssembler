@@ -27,7 +27,7 @@ The current version requires:
 4. `MAFFT (v7.467)`
 5. `SPAdes (v3.14.0)` This is optional if the user would like to try a SPAdes version of the re-sampling scheme.
 
-The latter three tools can be installed using Bioconda (https://bioconda.github.io/). 
+The latter four tools can be installed using Bioconda (https://bioconda.github.io/). 
 
 **Please ensure the above in your environment variable `PATH`.**
 
