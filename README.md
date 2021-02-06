@@ -40,4 +40,4 @@ Please contact `cao.shenghao@foxmail.com` for any question.
 
 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License**
 
-For details, please read `BAUMsoft/License`.
+For details, please read `RegAssembler/License`.
