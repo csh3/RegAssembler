@@ -46,7 +46,7 @@ n1 = int(args.n1/2)
 n2 = int(args.n2/2)
 print('\nImporting read files ...\n')
 total_reads_1 = [rec for rec in SeqIO.parse(args.r1, "fastq")]
-total_reads_2 = [rec for rec in SeqIO.parse(args.r2, "fastq")]c
+total_reads_2 = [rec for rec in SeqIO.parse(args.r2, "fastq")]
 
 for i in range(args.s):
     i+=1
