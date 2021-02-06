@@ -1,4 +1,4 @@
-# Copyright © 2021, Shenghao Cao, Lei M. Li. Academy of Mathematics and Systems Science, Chinese Academy of Sciences, Beijing 100190, China
+# Copyright © 2021, Shenghao Cao & Lei M. Li. Academy of Mathematics and Systems Science, Chinese Academy of Sciences, Beijing 100190, China
 
 import os
 import argparse
