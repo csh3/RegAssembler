@@ -20,7 +20,7 @@ Then run the pipeline in the directory `RegAssembler`.
 The current version requires:
 
 1. `Python3` with the following modules: 
-`os`, `sys`,`re`, `argparse`, `biopython`, `numpy`, `math`,`random`,`networkx`, `scipy`,`statsmodels`, `copy`, `collections`, `time`, `multiprocessing`
+`os`, `sys`, `re`, `argparse`, `biopython`, `numpy`, `math`, `random`, `networkx`, `scipy`, `statsmodels`, `copy`, `collections`, `time`, `multiprocessing`
 
 2. `BLAST (version 2.9.0+)`
 3. `BWA (version 0.7.17-r1188)`
