@@ -25,7 +25,7 @@ The current version requires:
 2. `BLAST (version 2.9.0+)`
 3. `BWA (version 0.7.17-r1188)`
 4. `MAFFT (v7.467)`
-5. `SPAdes (v3.14.0)` This is optional if the user would like to try a SPAdes version of the re-sampling scheme.
+5. `SPAdes (v3.14.0)` This is optional if the user would like to try the re-sampling version of SPAdes.
 
 The latter four tools can be installed using Bioconda (https://bioconda.github.io/). 
 
