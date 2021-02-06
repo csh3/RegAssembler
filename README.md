@@ -56,24 +56,17 @@ python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -n1 10000 -n2 10000 -thr 3 -
 
 `-s SAMPLES` specifies the number of samplings in the re-sampling scheme. The default setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
 
-## 5. Output
-
-## 6. Example
-
-## 7. Parameters
-
-
-## 8. Current version
+## 5. Current version
 
 The version of the current release is v1.0.
 
 
-## 9. Contact
+## 6. Contact
 
 Please contact `cao.shenghao@foxmail.com` for any questions.
 
 
-## 10. License
+## 7. License
 
 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License**
 
