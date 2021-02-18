@@ -8,7 +8,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-r1', required=True, help='Fastq file with forward paired reads')
 parser.add_argument('-r2', required=True, help='Fastq file with reverse paired reads')
 parser.add_argument('-l', required=True, type=int, help='Output reads no shorter than this value')
-parser.add_argument('-q', default=0, type=int, help='Output reads with Phred scores of all the bases no less than this value')
+parser.add_argument('-q', default=0, type=int, help='Output reads with all the Phred scores no less than this value')
+parser.add_argument('-o1', default='filteredReads1.fq', help='Output file with forward filtered reads')
+parser.add_argument('-o2', default='filteredReads2.fq', help='Output file with reverse filtered reads')
 
 args = parser.parse_args()
 
@@ -30,6 +32,6 @@ while True:
     except StopIteration:
         break
 
-count1=SeqIO.write(filtered_reads_1, "standardReads1.fq", "fastq")
-count2=SeqIO.write(filtered_reads_2, "standardReads2.fq", "fastq")
+count1=SeqIO.write(filtered_reads_1, args.o1, "fastq")
+count2=SeqIO.write(filtered_reads_2, args.o2, "fastq")
 
