@@ -15,13 +15,13 @@ def sampleReads(prefix, number):
     count1=SeqIO.write(sample_reads_1, prefix+"-1.fq", "fastq")
     count2=SeqIO.write(sample_reads_2, prefix+"-2.fq", "fastq")
 
-descript="This program assembles genomes by .\n"
+descript="This program assembles genomes by robust regression and re-sampling techniques.\n"
 parser = argparse.ArgumentParser(description=descript)
 parser.add_argument('-t', type=int, default=1, help='Number of threads for parallelism')
 parser.add_argument('-s', type=int, default=10, help='Total sampling times')
 parser.add_argument('-asm', default="RegAssembler", help='Alternative assemblers: RegAssembler, SPAdes')
-parser.add_argument('-r1', default='standardReads1.fq', help='Fastq file with forward paired reads')
-parser.add_argument('-r2', default='standardReads2.fq', help='Fastq file with reverse paired reads')
+parser.add_argument('-r1', default='filteredReads1.fq', help='Fastq file with forward paired reads')
+parser.add_argument('-r2', default='filteredReads2.fq', help='Fastq file with reverse paired reads')
 parser.add_argument('-n1', type=int, default=10000, help='Number of training reads for draft assemblies')
 parser.add_argument('-n2', type=int, default=20000, help='Number of test reads for polishing and evaluating assemblies')
 parser.add_argument('-thr', type=int, default=3, help='Residual threshold for modified IRLS algorithm to halt')
