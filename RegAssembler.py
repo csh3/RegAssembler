@@ -480,11 +480,11 @@ if __name__ == "__main__":
     parser.add_argument('-al', type=int, default=20, help='Minimum alignment length for a successful overlap')
     parser.add_argument('-nchi', action="store_true", help='No chimeric reads need to be detected and removed')
     parser.add_argument('-cl', type=int, default=500, help='Shorter contigs will be removed')
-    parser.add_argument("-ridge", action="store_true", help="Use robust ridge regression")
+    # parser.add_argument("-ridge", action="store_true", help="Use robust ridge regression")
     args = parser.parse_args()
 
     print("\n--------------------------------------\n")
-    print("Parameters: RegAssembler -r1 %s -r2 %s -o %s -t %d -thr %d -ho %d -ip %d -al %d -cl %d -nchi %s -ridge %s\n"%(args.r1,args.r2,args.o,args.t,args.thr,args.ho,args.ip,args.al,args.cl,args.nchi,args.ridge))
+    print("Parameters: RegAssembler -r1 %s -r2 %s -o %s -t %d -thr %d -ho %d -ip %d -al %d -cl %d -nchi %s \n"%(args.r1,args.r2,args.o,args.t,args.thr,args.ho,args.ip,args.al,args.cl,args.nchi))
 
     startTime = time.time()
 
@@ -541,7 +541,7 @@ if __name__ == "__main__":
     response=np.vstack(response_list)
 
     print("\nRunning iteratively reweighted least squares algorithm...\n")
-    estimates_list, reads_list, index_list= IRLS(copy.deepcopy(design),copy.deepcopy(response),args.thr,args.ridge)
+    estimates_list, reads_list, index_list= IRLS(copy.deepcopy(design),copy.deepcopy(response),args.thr)
 
     print("\nLinking separate blocks...")
     Estimates_list, Reads_list = linkContigs(estimates_list, reads_list, index_list, copy.deepcopy(design))
