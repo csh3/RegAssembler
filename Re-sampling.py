@@ -91,7 +91,7 @@ for i in range(args.s):
                 for seq_record in SeqIO.parse('%s/out-%d/contigs.fasta'%(d,i), 'fasta'):
                     if len(str(seq_record.seq))>500:
                         contigNum+=1
-                        fout.write(">contig%d"%contigNum)
+                        fout.write(">contig%d\n"%contigNum)
                         fout.write(str(seq_record.seq)+'\n')
 
         totalContigLen=0
