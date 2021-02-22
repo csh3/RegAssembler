@@ -138,8 +138,12 @@ def setupRegressionModel(blast, model_dic, thread, hangingOut=2, alignmentLen=20
                     indptr.append(indptr[-1]+2)
                                
 
-    design=sp.csr_matrix((data, indices, indptr), shape=(row, len(reads)))                           
-    response=np.matrix(response)
+    design=sp.csr_matrix((data, indices, indptr), shape=(row, len(reads)))
+    if response==[]:
+        response=np.matrix([[]]).T
+    else:
+        response=np.matrix(response)
+
     model_dic[thread]=[design, response]
 
 
