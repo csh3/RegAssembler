@@ -9,11 +9,20 @@ import numpy as np
 import random
 
 def sampleReads(prefix, number):
-    index = random.sample(range(len(total_reads_1)), number)
-    sample_reads_1 = [total_reads_1[k] for k in index]
-    sample_reads_2 = [total_reads_2[k] for k in index]
-    count1=SeqIO.write(sample_reads_1, prefix+"-1.fq", "fastq")
-    count2=SeqIO.write(sample_reads_2, prefix+"-2.fq", "fastq")
+    index = random.sample(range(int(len(total_reads_1)/4)), number)
+    with open(prefix+"-1.fq",'w') as fout:
+        for k in index:
+            fout.write(total_reads_1[4*k])
+            fout.write(total_reads_1[4*k+1])
+            fout.write(total_reads_1[4*k+2])
+            fout.write(total_reads_1[4*k+3])
+    with open(prefix+"-2.fq",'w') as fout:
+        for k in index:
+            fout.write(total_reads_2[4*k])
+            fout.write(total_reads_2[4*k+1])
+            fout.write(total_reads_2[4*k+2])
+            fout.write(total_reads_2[4*k+3])
+
 
 descript="This program assembles genomes by robust regression and re-sampling techniques.\n"
 parser = argparse.ArgumentParser(description=descript)
@@ -45,8 +54,12 @@ else:
 n1 = int(args.n1/2)
 n2 = int(args.n2/2)
 print('\nImporting read files ...\n')
-total_reads_1 = [rec for rec in SeqIO.parse(args.r1, "fastq")]
-total_reads_2 = [rec for rec in SeqIO.parse(args.r2, "fastq")]
+readFile_1 = open(args.r1,'r')
+readFile_2 = open(args.r2,'r')
+total_reads_1 = readFile_1.readlines()
+total_reads_2 = readFile_2.readlines()
+readFile_1.close()
+readFile_2.close()
 
 for i in range(args.s):
     i+=1

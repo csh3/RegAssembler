@@ -498,10 +498,10 @@ if __name__ == "__main__":
     print('\nRunning Blastn...')
     os.system("cat trainReads.fasta | parallel --recstart '>' -N %d --pipe blastn -evalue 0.01 -gapopen 5 -gapextend 2 -penalty -2 -reward 1 -word_size 10 -perc_identity %d -outfmt 6 -db db -query - -out 'blastnResults/blastnResult-{#}'"%(recordNum, args.ip))
 
-    print("\n--------------------------------------\nDetect and remove potential chimeras.\n")
     m=Manager()
 
     if not args.nchi:
+        print("\n--------------------------------------\nDetect and remove potential chimeras.\n")
         pool1 = Pool(args.t)
         chimeras_dic = m.dict()
         for thread in range(args.t):
