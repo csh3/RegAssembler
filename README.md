@@ -23,27 +23,30 @@ The current version requires:
 `os`, `sys`, `re`, `argparse`, `biopython`, `numpy`, `math`, `random`, `networkx`, `scipy`, `statsmodels`, `copy`, `collections`, `time`, `multiprocessing`
 
 2. `BLAST (version 2.9.0+)`
-3. `BWA (version 0.7.17-r1188)`
+3. `BWA (version 0.7.17)`
 4. `MAFFT (v7.467)`
-5. `SPAdes (v3.14.0)` This is optional if the user would like to try the re-sampling version of SPAdes.
+5. `fastuniq (version 1.1-1)`
+6. `SPAdes (v3.14.0)` This is optional if the user would like to try the re-sampling version of SPAdes.
 
-The latter four tools can be installed using Bioconda (https://bioconda.github.io/). 
+The latter five tools can be installed through the [Bioconda](https://bioconda.github.io/) channel. 
 
 **Please ensure the above in your environment variable `PATH`.**
 
-## 4. Commands
-The main program is `Re-sampling.py`, and we recommand the following parameters.
+## 4. Usage
+You can refer to `RegAssembler/Document`for detailed description of command line options. Here for a quick start, we recommend following parameter settings for different types of sequencing data. The main program is `Re-sampling.py` and `FilterReads.py` is used to remove short and duplicate reads in advance. 
 
-For **Miseq** datasets:
-
-```
-python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -t THREADS -s SAMPLES
-```
-
-For datasets sequenced from other illumina platforms (such as **NextSeq 550** and **NovaSeq 6000**):
+For **MiSeq** datasets:
 
 ```
-python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -n1 15000 -n2 60000 -thr 3 -ho 2 -al 20 -t THREADS -s SAMPLES
+python FilterReads.py -r1 readFile_1 -r2 readFile_2 -l 300 -o1 filteredReads1.fq -o2 filteredReads2.fq
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -t THREADS -s SAMPLES
+```
+
+For **NextSeq 550** datasets:
+
+```
+python FilterReads.py -r1 readFile_1 -r2 readFile_2 -l 150 -o1 filteredReads1.fq -o2 filteredReads2.fq
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 15000 -n2 60000 -thr 3 -ho 2 -al 20 -t THREADS -s SAMPLES
 ```
 
 For **simulated** datasets:
@@ -52,21 +55,45 @@ For **simulated** datasets:
 python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -n1 10000 -n2 10000 -thr 3 -ho 2 -al 30 -nchi -t THREADS -s SAMPLES
 ```
 
-`-t THREADS` specifies the number of threads you would like to use. 
+`-t THREADS` specifies the number of CPU threads you would like to use. 
 
-`-s SAMPLES` specifies the number of samplings in the re-sampling scheme. The default setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
+`-s SAMPLES` specifies the number of samplings. The default setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
 
-## 5. Current version
+## 5. Example
+We offer an example that runs RegAssembler on a MiSeq dataset. First download the dataset from NCBI's Sequence Read Archive using SRA Toolkit.
+
+```
+prefetch SRR12089766
+fastq-dump --split-e SRR12089766
+```
+
+Then filter out short reads.
+
+```
+python FilterReads.py -r1 SRR12089766_1.fastq -r2 SRR12089766_2.fastq -l 300 -o1 filteredReads1.fq -o2 filteredReads2.fq
+```
+Run RegAssembler with 1 sampling.
+
+```
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -s 1 -t THREADS
+```
+Run RegAssembler with 10 samplings.
+
+```
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -s 10 -t THREADS
+```
+`-t THREADS` specifies the number of CPU threads you would like to use. 
+
+## 6. Current version
 
 The version of the current release is v1.0.
 
 
-## 6. Contact
+## 7. Contact
 
-Please contact `cao.shenghao@foxmail.com` for any questions.
+Please contact <cao.shenghao@foxmail.com> for any questions.
 
-
-## 7. License
+## 8. License
 
 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License**
 
