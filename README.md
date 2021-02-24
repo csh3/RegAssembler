@@ -33,7 +33,7 @@ The latter five tools can be installed through the [Bioconda](https://bioconda.g
 **Please ensure the above in your environment variable `PATH`.**
 
 ## 4. Usage
-You can refer to `RegAssembler/Document`for detailed description of command line options. Here for a quick start, we recommend following parameter settings for different types of sequencing data. The main program is `Re-sampling.py` and `FilterReads.py` is used to remove short and duplicate reads in advance. 
+We recommend following parameter settings for different types of sequencing data. The main program is `Re-sampling.py` and `FilterReads.py` is used to remove short and duplicate reads in advance. 
 
 For **MiSeq** datasets:
 
