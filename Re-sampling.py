@@ -85,7 +85,7 @@ for i in range(args.s):
                 os.system("cd %s; python ../RegAssembler.py -r1 ../reads/train%d-1.fq -r2 ../reads/train%d-2.fq -t %d -thr %d -ho %d -al %d -o draft-%d.fa "%(d,i,i,args.t,args.thr,args.ho,args.al,i))
         elif args.asm.lower() == "spades":
             print('Running SPAdes ...\n')
-            os.system("cd %s; spades.py -1 ../reads/train%d-1.fq -2 ../reads/train%d-2.fq -o out-%d --isolate -t %d"%(d,i,i,i,args.t))
+            os.system("cd %s; spades.py -1 ../reads/train%d-1.fq -2 ../reads/train%d-2.fq -o out-%d --isolate -t %d >> spades.log 2>&1"%(d,i,i,i,args.t))
             contigNum=0
             with open('%s/draft-%d.fa'%(d,i),'w') as fout:
                 for seq_record in SeqIO.parse('%s/out-%d/contigs.fasta'%(d,i), 'fasta'):
