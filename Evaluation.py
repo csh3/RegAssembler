@@ -215,7 +215,7 @@ for contigName in readCoverage:
         # else:
         #     I=insertion_dic['I']*math.log(1-0.00005)+insertion_dic['']*math.log(0.00005)
         #     D=insertion_dic['']*math.log(1-0.00005)+insertion_dic['I']*math.log(0.00005)
-        #     aheadErrorRate = 1/(1+np.exp((D-I)*((D-I)<=709)))*((D-I)<=709)
+        #     aheadErrorRate = 1/(1+np.exp((D-I)*((D-I)<=708)))*((D-I)<=708)
 
         A=G=C=T=D=0
         for prob in scorePerBase[contigName][base]['A']:
@@ -229,11 +229,11 @@ for contigName in readCoverage:
         for prob in scorePerBase[contigName][base]['']:
             D+=math.log(1-0.00005);A+=math.log(0.00005);G+=math.log(0.00005);C+=math.log(0.00005);T+=math.log(0.00005)
 
-        PA=1/(1+np.exp((T-A)*((T-A)<=709))+np.exp((G-A)*((G-A)<=709))+np.exp((C-A)*((C-A)<=709))+np.exp((D-A)*((D-A)<=709)))*((T-A)<=709)*((G-A)<=709)*((C-A)<=709)*((D-A)<=709)
-        PG=1/(1+np.exp((A-G)*((A-G)<=709))+np.exp((T-G)*((T-G)<=709))+np.exp((C-G)*((C-G)<=709))+np.exp((D-G)*((D-G)<=709)))*((A-G)<=709)*((T-G)<=709)*((C-G)<=709)*((D-G)<=709)
-        PC=1/(1+np.exp((A-C)*((A-C)<=709))+np.exp((G-C)*((G-C)<=709))+np.exp((T-C)*((T-C)<=709))+np.exp((D-C)*((D-C)<=709)))*((A-C)<=709)*((G-C)<=709)*((T-C)<=709)*((D-C)<=709)
-        PT=1/(1+np.exp((A-T)*((A-T)<=709))+np.exp((G-T)*((G-T)<=709))+np.exp((C-T)*((C-T)<=709))+np.exp((D-T)*((D-T)<=709)))*((A-T)<=709)*((G-T)<=709)*((C-T)<=709)*((D-T)<=709)
-        PD=1/(1+np.exp((A-D)*((A-D)<=709))+np.exp((G-D)*((G-D)<=709))+np.exp((C-D)*((C-D)<=709))+np.exp((T-D)*((T-D)<=709)))*((A-D)<=709)*((G-D)<=709)*((C-D)<=709)*((T-D)<=709)
+        PA=1/(1+np.exp((T-A)*((T-A)<=708))+np.exp((G-A)*((G-A)<=708))+np.exp((C-A)*((C-A)<=708))+np.exp((D-A)*((D-A)<=708)))*((T-A)<=708)*((G-A)<=708)*((C-A)<=708)*((D-A)<=708)
+        PG=1/(1+np.exp((A-G)*((A-G)<=708))+np.exp((T-G)*((T-G)<=708))+np.exp((C-G)*((C-G)<=708))+np.exp((D-G)*((D-G)<=708)))*((A-G)<=708)*((T-G)<=708)*((C-G)<=708)*((D-G)<=708)
+        PC=1/(1+np.exp((A-C)*((A-C)<=708))+np.exp((G-C)*((G-C)<=708))+np.exp((T-C)*((T-C)<=708))+np.exp((D-C)*((D-C)<=708)))*((A-C)<=708)*((G-C)<=708)*((T-C)<=708)*((D-C)<=708)
+        PT=1/(1+np.exp((A-T)*((A-T)<=708))+np.exp((G-T)*((G-T)<=708))+np.exp((C-T)*((C-T)<=708))+np.exp((D-T)*((D-T)<=708)))*((A-T)<=708)*((G-T)<=708)*((C-T)<=708)*((D-T)<=708)
+        PD=1/(1+np.exp((A-D)*((A-D)<=708))+np.exp((G-D)*((G-D)<=708))+np.exp((C-D)*((C-D)<=708))+np.exp((T-D)*((T-D)<=708)))*((A-D)<=708)*((G-D)<=708)*((C-D)<=708)*((T-D)<=708)
 
         if contigSeq[contigName][base-1].upper()=='A':
             quality=PA
