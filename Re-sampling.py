@@ -24,19 +24,19 @@ def sampleReads(prefix, number):
             fout.write(total_reads_2[4*k+3])
 
 
-descript="This program assembles genomes by robust regression and re-sampling techniques.\n"
+descript="This program assembles genomes via robust regression and re-sampling techniques.\n"
 parser = argparse.ArgumentParser(description=descript)
-parser.add_argument('-t', type=int, default=1, help='Number of threads for parallelism')
-parser.add_argument('-s', type=int, default=10, help='Total sampling times')
-parser.add_argument('-asm', default="RegAssembler", help='Alternative assemblers: RegAssembler, SPAdes')
-parser.add_argument('-r1', default='filteredReads1.fq', help='Fastq file with forward paired reads')
-parser.add_argument('-r2', default='filteredReads2.fq', help='Fastq file with reverse paired reads')
-parser.add_argument('-n1', type=int, default=10000, help='Number of training reads for draft assemblies')
-parser.add_argument('-n2', type=int, default=20000, help='Number of test reads for polishing and evaluating assemblies')
-parser.add_argument('-thr', type=int, default=3, help='Residual threshold for modified IRLS algorithm to halt')
-parser.add_argument('-ho', type=int, default=2, help='Admissible hanging-out length for pairwise overlaps')
-parser.add_argument('-al', type=int, default=20, help='Minimum alignment length for a successful overlap')
-parser.add_argument('-nchi', action="store_true", help='No chimeric reads need to be detected and removed')
+parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
+parser.add_argument('-s', type=int, default=10, help='total sampling times [default: 1]')
+parser.add_argument('-asm', default="RegAssembler", help='alternative assemblers: RegAssembler, SPAdes [default: RegAssembler]')
+parser.add_argument('-r1', default='filteredReads1.fq', help='fastq file with forward paired reads [default: filteredReads1.fq]')
+parser.add_argument('-r2', default='filteredReads2.fq', help='fastq file with reverse paired reads [default: filteredReads2.fq]')
+parser.add_argument('-n1', type=int, default=10000, help='number of training reads in each sampling for generating draft assembly [default: 10000]')
+parser.add_argument('-n2', type=int, default=20000, help='number of test reads in each sampling for polishing and evaluating draft assembly [default: 20000]')
+parser.add_argument('-thr', type=int, default=3, help='convergence threshold for modified IRLS algorithm to stop iteration [default: 3]')
+parser.add_argument('-ho', type=int, default=2, help='admissible hanging-out length for each pair of overlapping reads [default: 2]')
+parser.add_argument('-al', type=int, default=20, help='minimum alignment length for a successful overlap [default: 20]')
+parser.add_argument('-nchi', action="store_true", help='this flag cancels chimera detection and removal')
 
 args = parser.parse_args()
 
@@ -75,6 +75,8 @@ for i in range(args.s):
             print('Failed to assemble a qualified genome,\nyou can change the sampling coverage or tune the parameters.')
             sys.exit()
 
+        print('--------------------------------------')
+        print('Produce the draft assembly.\n')
         print('Sampling training reads ...\n')
         sampleReads('reads/train%d'%i, n1)
         if args.asm.lower() == "regassembler":
@@ -103,6 +105,8 @@ for i in range(args.s):
             while m<20:
                 m+=1
 
+                print('--------------------------------------')
+                print('Complete the draft assembly.\n')
                 print('Sampling test reads ...\n')
                 sampleReads('reads/test%d'%i, n2)
 
@@ -148,7 +152,7 @@ for i in range(args.s):
                     break
 
 print('\n\n----------------------------------------------------------------------------')
-print('Generate the final assembly by mutiple sequence alignment.\n')
+print('Determine the final assembly by mutiple sequence alignment.\n')
 # Generate consensus
 os.system("rm -rf msa")
 os.mkdir('msa')
@@ -168,8 +172,10 @@ with open('msa/msaInput','w') as fout:
                 else:
                     fout.write(str(seq_record.seq.reverse_complement())+'\n')
 
-os.system('cd msa; mafft --thread %d msaInput > msaOutput'%args.t)
+print('Running MAFFT ...\n')
+os.system('cd msa; mafft --thread %d msaInput > msaOutput 2>/dev/null'%args.t)
 
+print('Generating the final assembly and computing the entropy ...\n')
 multiSeq=[]
 entropy=[]
 consensus=[]
@@ -232,4 +238,4 @@ with open('finalAssembly.fa','w') as fout:
 if maxEntropy>0.5:
     print('The assembly is not stable and its entropy is %.4f.\n\nYou may change the sampling coverage or tune the parameters.'%maxEntropy)
 else:
-    print('\nThe final assembly is stable and its entropy is %.4f.\n'%maxEntropy)
+    print('\nFinished! The final assembly is stable and its entropy is %.4f.\n'%maxEntropy)

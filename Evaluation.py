@@ -50,12 +50,12 @@ def recordScorePerBase(contigName, start, sections, seq, phred, trimL, trimR):
 
 descript="This program evaluates the quality of assembly.\n"
 parser = argparse.ArgumentParser(description=descript)
-parser.add_argument('-r1', required=True, help='Fastq file with forward paired reads')
-parser.add_argument('-r2', required=True, help='Fastq file with reverse paired reads')
-parser.add_argument('-t', type=int, default=1, help='Number of threads for parallelism')
-parser.add_argument('-i', default='assembly.fa', help='Input file')
+parser.add_argument('-r1', required=True, help='fastq file with forward paired reads used for evaluation (required)')
+parser.add_argument('-r2', required=True, help='fastq file with reverse paired reads used for evaluation (required)')
+parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
+parser.add_argument('-i', default='assembly.fa', help='input fasta file of assembly to be evaluated [default: assembly.fa]')
 # parser.add_argument('-o1', default='quality.perBase', help='Output file of quality value per base')
-parser.add_argument('-o', default='summary.evaluation', help='Output file of evaluation statistics')
+parser.add_argument('-o', default='summary.evaluation', help='summary file to output evaluation statistics to [default: summary.evaluation]')
 args = parser.parse_args()
 
 print('\nMapping test reads to the polished assembly...\n')

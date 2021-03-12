@@ -5,13 +5,14 @@ import sys
 import argparse
 import os
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-r1', required=True, help='Fastq file with forward paired reads')
-parser.add_argument('-r2', required=True, help='Fastq file with reverse paired reads')
-parser.add_argument('-l', required=True, type=int, help='Output reads no shorter than this value')
+descript="This program removes short and duplicate reads in sequencing data.\n"
+parser = argparse.ArgumentParser(description=descript)
+parser.add_argument('-r1', required=True, help='fastq file with forward paired reads (required)')
+parser.add_argument('-r2', required=True, help='fastq file with reverse paired reads (required)')
+parser.add_argument('-l', required=True, type=int, help='output reads no shorter than this value (required)')
 # parser.add_argument('-q', default=0, type=int, help='Output reads with all the Phred scores no less than this value')
-parser.add_argument('-o1', default='filteredReads1.fq', help='Output file with forward filtered reads')
-parser.add_argument('-o2', default='filteredReads2.fq', help='Output file with reverse filtered reads')
+parser.add_argument('-o1', default='filteredReads1.fq', help='fastq file to output forward filtered reads to [default: filteredReads1.fq]')
+parser.add_argument('-o2', default='filteredReads2.fq', help='fastq file to output reverse filtered reads to [default: filteredReads2.fq]')
 
 args = parser.parse_args()
 length = args.l

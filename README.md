@@ -33,7 +33,7 @@ The latter five tools can be installed through the [Bioconda](https://bioconda.g
 **Please ensure the above in your environment variable `PATH`.**
 
 ## 4. Usage
-We recommend following parameter settings for different types of sequencing data. The main program is `Re-sampling.py` and `FilterReads.py` is used to remove short and duplicate reads in advance. 
+The main program is `Re-sampling.py`, and `FilterReads.py` is used to remove short and duplicate reads in advance. Here for a quick start, we recommend following parameter settings for different types of sequencing data. You can specify the command line option `-h` to look up the detailed usage message.
 
 For **MiSeq** datasets:
 
@@ -81,6 +81,12 @@ Run RegAssembler with 10 samplings.
 
 ```
 python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -s 10 -t THREADS
+```
+
+Run the re-sampling version of SPAdes with 10 samplings
+
+```
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -asm spades -s 10 -t THREADS
 ```
 `-t THREADS` specifies the number of CPU threads you would like to use. 
 

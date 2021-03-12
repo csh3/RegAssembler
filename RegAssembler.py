@@ -468,18 +468,18 @@ def writeResults(contig_list,outFile):
 
 if __name__ == "__main__":
 
-    descript="This program assembles genomes by robust regression.\n"
+    descript="This program assembles genomes via robust regression.\n"
     parser = argparse.ArgumentParser(description=descript)
-    parser.add_argument('-r1', required=True, help='Fastq file with forward paired reads')
-    parser.add_argument('-r2', required=True, help='Fastq file with reverse paired reads')
-    parser.add_argument('-o', default='draft.fa', help='Output file')
-    parser.add_argument('-t', type=int, default=1, help='Number of threads for parallelism')
-    parser.add_argument('-thr', type=int, default=3, help='Residual threshold for IRLS algorithm to halt')
-    parser.add_argument('-ho', type=int, default=2, help='Admissible hanging-out length for pairwise overlaps')
-    parser.add_argument('-ip', type=int, default=98, help='Minimum identity percentage for a successful overlap')
-    parser.add_argument('-al', type=int, default=20, help='Minimum alignment length for a successful overlap')
-    parser.add_argument('-nchi', action="store_true", help='No chimeric reads need to be detected and removed')
-    parser.add_argument('-cl', type=int, default=500, help='Shorter contigs will be removed')
+    parser.add_argument('-r1', required=True, help='fastq file with forward paired reads (required)')
+    parser.add_argument('-r2', required=True, help='fastq file with reverse paired reads (required)')
+    parser.add_argument('-o', default='draft.fa', help='fasta file to output assembly result to [default: draft.fa]')
+    parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
+    parser.add_argument('-thr', type=int, default=3, help='convergence threshold for modified IRLS algorithm to stop iteration [default: 3]')
+    parser.add_argument('-ho', type=int, default=2, help='admissible hanging-out length for each pair of overlapping reads [default: 2]')
+    parser.add_argument('-ip', type=int, default=98, help='minimum identity percentage for a successful overlap [default: 98]')
+    parser.add_argument('-al', type=int, default=20, help='minimum alignment length for a successful overlap [default: 20]')
+    parser.add_argument('-nchi', action="store_true", help='this flag cancels chimera detection and removal')
+    parser.add_argument('-cl', type=int, default=500, help='contigs shorter than this value will be removed [default: 500]')
     # parser.add_argument("-ridge", action="store_true", help="Use robust ridge regression")
     args = parser.parse_args()
 
