@@ -24,15 +24,18 @@ def sampleReads(prefix, number):
             fout.write(total_reads_2[4*k+3])
 
 
-descript="This program assembles genomes via robust regression and re-sampling techniques.\n"
+descript="This program assembles SARS-CoV-2 genomes via robust regression and resampling techniques.\n"
 parser = argparse.ArgumentParser(description=descript)
-parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
-parser.add_argument('-s', type=int, default=10, help='total sampling times [default: 1]')
-parser.add_argument('-asm', default="RegAssembler", help='alternative assemblers: RegAssembler, SPAdes [default: RegAssembler]')
 parser.add_argument('-r1', default='filteredReads1.fq', help='fastq file with forward paired reads [default: filteredReads1.fq]')
 parser.add_argument('-r2', default='filteredReads2.fq', help='fastq file with reverse paired reads [default: filteredReads2.fq]')
-parser.add_argument('-n1', type=int, default=10000, help='number of training reads in each sampling for generating draft assembly [default: 10000]')
-parser.add_argument('-n2', type=int, default=20000, help='number of test reads in each sampling for polishing and evaluating draft assembly [default: 20000]')
+parser.add_argument('-asm', default="RegAssembler", help='alternative assemblers: RegAssembler, SPAdes [default: RegAssembler]')
+parser.add_argument('-s', type=int, default=1, help='number of candidate assemblies to be generated [default: 1]')
+parser.add_argument('-s1', type=int, default=5, help='maximal sampling times for generating a qualified draft assembly [default: 5]')
+parser.add_argument('-s2', type=int, default=10, help='maximal sampling times for generating a qualified polished assembly [default: 10]')
+parser.add_argument('-c1', type=int, default=100, help='coverage of training reads to be sampled for generating draft assembly [default: 100]')
+parser.add_argument('-c2', type=int, default=200, help='coverage of test reads to be sampled for polishing and evaluating draft assembly [default: 200]')
+parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
+parser.add_argument('-e', type=float, default=0.5, help='entropy higher than this value to be considered as unstable [default: 0.5]')
 parser.add_argument('-thr', type=int, default=3, help='convergence threshold for modified IRLS algorithm to stop iteration [default: 3]')
 parser.add_argument('-ho', type=int, default=2, help='admissible hanging-out length for each pair of overlapping reads [default: 2]')
 parser.add_argument('-al', type=int, default=20, help='minimum alignment length for a successful overlap [default: 20]')
@@ -51,8 +54,6 @@ else:
     print('Please choose one of the following assemblers: RegAssembler, SPAdes.')
     sys.exit()
 
-n1 = int(args.n1/2)
-n2 = int(args.n2/2)
 print('\nImporting read files ...\n')
 readFile_1 = open(args.r1,'r')
 readFile_2 = open(args.r2,'r')
@@ -60,6 +61,10 @@ total_reads_1 = readFile_1.readlines()
 total_reads_2 = readFile_2.readlines()
 readFile_1.close()
 readFile_2.close()
+
+length = (sum([len(total_reads_1[4*k+1].strip()) for k in range(int(len(total_reads_1)/4))])+sum([len(total_reads_2[4*k+1].strip()) for k in range(int(len(total_reads_2)/4))]))/(len(total_reads_1)/2)
+n1 = int(30000*args.c1/(length*2))
+n2 = int(30000*args.c2/(length*2))
 
 for i in range(args.s):
     i+=1
@@ -69,10 +74,10 @@ for i in range(args.s):
     success = False
 
     while not success:
-        if n<20:
+        if n<args.s1:
             n+=1
         else:
-            print('Failed to assemble a qualified genome,\nyou can change the sampling coverage or tune the parameters.')
+            print('\nFailed to assemble a qualified genome,\nyou may change the sampling coverage or tune the parameters.\n')
             sys.exit()
 
         print('--------------------------------------')
@@ -102,7 +107,7 @@ for i in range(args.s):
 
         if totalContigLen>28400:
             m=0
-            while m<20:
+            while m<args.s2:
                 m+=1
 
                 print('--------------------------------------')
@@ -149,7 +154,7 @@ for i in range(args.s):
                                 lowestQ=float(record[-1])
                     if mappingRate>0.95 and multiMappingRate==0 and lowRate==0 and lowestQ>0.9:
                         success = True
-                    break
+                        break
 
 print('\n\n----------------------------------------------------------------------------')
 print('Determine the final assembly by mutiple sequence alignment.\n')
@@ -200,7 +205,7 @@ for i in range(len(multiSeq[0])):
 start=-1
 end=len(consensus)
 for i in range(len(entropy)):
-    if entropy[i]>0.5:
+    if entropy[i]>args.e:
         if i<500:
             start=i
         elif i>len(consensus)-500:
@@ -234,8 +239,10 @@ with open('finalAssembly.fa','w') as fout:
 #         else:
 #             fout.write(str(round(entropy[k],4))+' ')
 #     fout.write('\n')
-    
-if maxEntropy>0.5:
-    print('The assembly is not stable and its entropy is %.4f.\n\nYou may change the sampling coverage or tune the parameters.'%maxEntropy)
+
+print('\nFinished! The assembly sequence is in the file finalAssembly.fa.\n')
+
+if maxEntropy>args.e:
+    print('\nThe final assembly is not stable and its entropy is %.4f.\n'%maxEntropy)
 else:
-    print('\nFinished! The final assembly is stable and its entropy is %.4f.\n'%maxEntropy)
+    print('\nThe final assembly is stable and its entropy is %.4f.\n'%maxEntropy)
