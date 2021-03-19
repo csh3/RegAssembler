@@ -26,7 +26,7 @@ The current version requires:
 3. `BWA (version 0.7.17)`
 4. `MAFFT (v7.467)`
 5. `fastuniq (version 1.1-1)`
-6. `SPAdes (v3.14.0)` This is optional if the user would like to try the re-sampling version of SPAdes.
+6. `SPAdes (v3.14.0)` This is optional if the user would like to try the resampling version of SPAdes.
 
 The latter five tools can be installed through the [Bioconda](https://bioconda.github.io/) channel. 
 
@@ -57,7 +57,7 @@ python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -c1 100 -c2 100 -thr 3 -ho 2
 
 `-t THREADS` specifies the number of CPU threads you would like to use. 
 
-`-s SAMPLES` specifies the number of samplings. The default setting is `-s 10`, but you can specify `-s 1` to disuse the re-sampling scheme.
+`-s SAMPLES` specifies the number of samplings. The default setting is `-s 10`, but you can specify `-s 1` to disuse the resampling scheme.
 
 ## 5. Example
 We offer an example that runs RegAssembler on a MiSeq dataset. First download the dataset from NCBI's Sequence Read Archive using SRA Toolkit.
@@ -83,7 +83,7 @@ Run RegAssembler with 10 samplings.
 python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -s 10 -t THREADS
 ```
 
-Run the re-sampling version of SPAdes with 10 samplings
+Run the resampling version of SPAdes with 10 samplings
 
 ```
 python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -asm spades -s 10 -t THREADS
