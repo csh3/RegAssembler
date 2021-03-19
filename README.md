@@ -3,7 +3,7 @@ Copyright © 2021, Shenghao Cao & Lei M. Li. Academy of Mathematics and Systems 
 # RegAssembler
 
 ## 1. Introduction
-RegAssembler is a genome assembler employing the robust regression and re-sampling techniques.
+RegAssembler is a genome assembler employing the robust regression and resampling techniques.
 
 The current version is specially designed for high-confidence reconstruction of SARS-CoV-2 genomes using Illumina sequencing reads.
 
@@ -33,26 +33,26 @@ The latter five tools can be installed through the [Bioconda](https://bioconda.g
 **Please ensure the above in your environment variable `PATH`.**
 
 ## 4. Usage
-The main program is `Re-sampling.py`, and `FilterReads.py` is used to remove short and duplicate reads in advance. Here for a quick start, we recommend following parameter settings for different types of sequencing data. You can specify the command line option `-h` to look up the detailed usage message.
+The main program is `Re-sampling.py`, and `FilterReads.py` is used to remove short and duplicate reads in advance. Here for a quick start, we recommend following parameter settings for different types of sequencing data. You can specify the command line option `-h` to look up the detailed usage message. If you would like to use the resampling version of SPAdes, you can add the option `-asm spades` to the command line. 
 
 For **MiSeq** datasets:
 
 ```
 python FilterReads.py -r1 readFile_1 -r2 readFile_2 -l 300 -o1 filteredReads1.fq -o2 filteredReads2.fq
-python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 10000 -n2 20000 -thr 10 -ho 5 -al 30 -t THREADS -s SAMPLES
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -c1 100 -c2 200 -thr 10 -ho 5 -al 30 -t THREADS -s SAMPLES
 ```
 
 For **NextSeq 550** datasets:
 
 ```
 python FilterReads.py -r1 readFile_1 -r2 readFile_2 -l 150 -o1 filteredReads1.fq -o2 filteredReads2.fq
-python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -n1 15000 -n2 60000 -thr 3 -ho 2 -al 20 -t THREADS -s SAMPLES
+python Re-sampling.py -r1 filteredReads1.fq -r2 filteredReads2.fq -c1 75 -c2 300 -thr 3 -ho 2 -al 20 -t THREADS -s SAMPLES
 ```
 
 For **simulated** datasets:
 
 ```
-python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -n1 10000 -n2 10000 -thr 3 -ho 2 -al 30 -nchi -t THREADS -s SAMPLES
+python Re-sampling.py -r1 readFile_1 -r2 readFile_2 -c1 100 -c2 100 -thr 3 -ho 2 -al 30 -nchi -t THREADS -s SAMPLES
 ```
 
 `-t THREADS` specifies the number of CPU threads you would like to use. 
