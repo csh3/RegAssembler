@@ -240,7 +240,7 @@ with open('finalAssembly.fa','w') as fout:
 #             fout.write(str(round(entropy[k],4))+' ')
 #     fout.write('\n')
 
-print('\nFinished! The assembly sequence is in the file finalAssembly.fa.\n')
+print('\nFinished! The result sequence is in the file finalAssembly.fa.\n')
 
 if maxEntropy>args.e:
     print('\nThe final assembly is not stable and its entropy is %.4f.\n'%maxEntropy)
