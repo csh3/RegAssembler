@@ -53,10 +53,10 @@ descript="This program corrects erroneous bases in the assembly.\n"
 parser = argparse.ArgumentParser(description=descript)
 parser.add_argument('-r1', required=True, help='fastq file with forward paired reads used for error correction (required)')
 parser.add_argument('-r2', required=True, help='fastq file with reverse paired reads used for error correction (required)')
-parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
-parser.add_argument('-tr', type=int, default=2, help='number of bases disregarded at alignment ends [default: 2]')
 parser.add_argument('-i', default='complemented.fa', help='input fasta file of draft assembly to be corrected [default: complemented.fa]')
 parser.add_argument('-o', default='corrected.fa', help='fasta file to output corrected assembly to [default: corrected.fa]')
+parser.add_argument('-tr', type=int, default=2, help='number of bases disregarded at alignment ends [default: 2]')
+parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]')
 args = parser.parse_args()
 
 print('\nMapping test reads to the draft assembly...\n')
