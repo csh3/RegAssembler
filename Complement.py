@@ -80,11 +80,11 @@ def joinContigs(consensus_list, minScore=20, trimLen=500):
 
 descript="This program joins separate contigs together.\n"
 parser = argparse.ArgumentParser(description=descript)
-parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]' )
 parser.add_argument('-r1', required=True, help='fastq file with forward paired reads (required)')
 parser.add_argument('-r2', required=True, help='fastq file with reverse paired reads (required)')
 parser.add_argument('-i', default='draft.fa', help='input fasta file of draft assembly to be completed [default: draft.fa]')
 parser.add_argument('-o', default='complemented.fa', help='fasta file to output complemented assembly to [default: complemented.fa]')
+parser.add_argument('-t', type=int, default=1, help='number of threads for parallelism [default: 1]' )
 args = parser.parse_args()
 
 aligner = Align.PairwiseAligner(mode = 'local', match_score=1, mismatch_score=-2, open_gap_score=-5, extend_gap_score=-1)
